@@ -99,6 +99,8 @@ while True:
                                 if not path.exists(mailbox_head.value):
                                     current_status.set(203,'No such mailbox')
                                     current_status.send_status(f)
+                                    f.write('\n')
+                                    f.flush()
                                     break
                                 else:
                                     m=hashlib.md5()
@@ -109,12 +111,18 @@ while True:
                                     with open(mailbox_head.value+'/'+hex_path,"w") as my_file:
                                         my_file.write(message)
                                     current_status.send_status(f)
+                                    f.write('\n')
+                                    f.flush()
                                     break
                             else:
                                 current_status.send_status(f)
+                                f.write('\n')
+                                f.flush()
                                 break
                         else:
                             current_status.send_status(f)
+                            f.write('\n')
+                            f.flush()
                             break
                 elif (commands.index(data)==2): #LS
                     while True:
@@ -129,7 +137,7 @@ while True:
                             files_list=os.listdir(mailbox_head.value)
                             current_status.set(100,'OK')
                             current_status.send_status(f)       
-                            f.write('Number-of-messages:'+str(len(files_list))+'\n')
+                            f.write('Number-of-messages:'+str(len(files_list))+'\n\n')
                             f.flush()
                             for item in files_list:
                                 f.write(item+'\n')
@@ -137,6 +145,8 @@ while True:
                             break
                         else:
                             current_status.send_status(f)
+                            f.write('\n')
+                            f.flush()
                             break
             else:
                 current_status.set(204,'Unknown method')
